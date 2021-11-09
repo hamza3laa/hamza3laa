@@ -1,4 +1,4 @@
-- 👋 Hi, I’m @hamza3laa
+
 - 👀 I’m interested in DATA
 - 🌱 I’m currently learning DATA SCINCE
 - 💞️ I’m looking to collaborate on Data Analaysis projects
