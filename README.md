@@ -1,7 +1,6 @@
 
 - 👀 I’m interested in DATA
-- 🌱 I’m currently learning DATA SCINCE
-- 💞️ I’m looking to collaborate on Data Analaysis projects
+- 💞️ I’m looking to collaborate on Data projects
 - 📫 How to reach me : E-mail : hamza.alaa89@gmail.com   linkedin: https://www.linkedin.com/in/hamza-alaa-122351ba/ 
 
 <!---
