@@ -1,6 +1,5 @@
 
-- 👀 I’m interested in DATA
-- 💞️ I’m looking to collaborate on Data projects
+
 - 📫 How to reach me : E-mail : hamza.alaa89@gmail.com   linkedin: https://www.linkedin.com/in/hamza-alaa-122351ba/ 
 
 <!---
