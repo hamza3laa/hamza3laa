@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ar">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dar Al-Arqam Ad</title>
+<style>
+  @font-face { font-family: 'Ruqaa'; src: url(fonts/aref-ruqaa-arabic-700-normal.woff2) format('woff2'); font-weight: 700; }
+  @font-face { font-family: 'Amiri'; src: url(fonts/amiri-arabic-400-normal.woff2) format('woff2'); font-weight: 400; }
+  @font-face { font-family: 'Amiri'; src: url(fonts/amiri-arabic-700-normal.woff2) format('woff2'); font-weight: 700; }
+  @font-face { font-family: 'Kufi'; src: url(fonts/reem-kufi-arabic-500-normal.woff2) format('woff2'); font-weight: 500; }
+  @font-face { font-family: 'Kufi'; src: url(fonts/reem-kufi-arabic-700-normal.woff2) format('woff2'); font-weight: 700; }
+  @font-face { font-family: 'Plex'; src: url(fonts/ibm-plex-sans-arabic-arabic-400-normal.woff2) format('woff2'); font-weight: 400; }
+  @font-face { font-family: 'Plex'; src: url(fonts/ibm-plex-sans-arabic-arabic-600-normal.woff2) format('woff2'); font-weight: 600; }
+  @font-face { font-family: 'Plex'; src: url(fonts/ibm-plex-sans-arabic-latin-400-normal.woff2) format('woff2'); font-weight: 400; unicode-range: U+0000-00FF; }
+  @font-face { font-family: 'Plex'; src: url(fonts/ibm-plex-sans-arabic-latin-600-normal.woff2) format('woff2'); font-weight: 600; unicode-range: U+0000-00FF; }
+  @font-face { font-family: 'Cormorant'; src: url(fonts/cormorant-garamond-latin-500-normal.woff2) format('woff2'); font-weight: 500; }
+  @font-face { font-family: 'Cormorant'; src: url(fonts/cormorant-garamond-latin-600-normal.woff2) format('woff2'); font-weight: 600; }
+  @font-face { font-family: 'Messiri'; src: url(fonts/el-messiri-arabic-700-normal.woff2) format('woff2'); font-weight: 700; }
+
+  :root {
+    --ink: #050b0d; --night: #0a1b1f; --deep: #0c2a2c; --emerald: #0f3d37; --teal: #1b5e55; --sea: #2f8c7c;
+    --gold: #d9ae57; --gold2: #f2d28b; --gold3: #fff1cf; --parch: #f1e6cf; --parch2: #e3d2ad; --sepia: #6b4a24;
+    --ember: #e07a3b; --ash: #8a9a98;
+  }
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  body { display: grid; place-items: center; font-family: 'Plex', sans-serif; }
+  #stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: var(--ink); transform-origin: 50% 50%; flex: none; }
+  #stage canvas, .layer, .scene, svg.full { position: absolute; inset: 0; width: 1920px; height: 1080px; }
+  .scene { visibility: hidden; opacity: 0; }
+  #vignette { position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse 75% 70% at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 100%); }
+  #grain { mix-blend-mode: overlay; opacity: .07; }
+  #flash { position: absolute; inset: 0; background: #fff6df; opacity: 0; mix-blend-mode: screen; }
+  .abs { position: absolute; }
+  .center { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+
+  /* ---------- brand ---------- */
+  .wordmark { font-family: 'Ruqaa', serif; color: var(--gold2); direction: rtl; white-space: nowrap; line-height: 1;
+    text-shadow: 0 0 30px rgba(242,210,139,.35); }
+  .url { font-family: 'Cormorant', serif; font-weight: 600; letter-spacing: .14em; color: var(--parch); white-space: nowrap; }
+
+  /* ---------- browser / UI mock ---------- */
+  .browser { position: absolute; border-radius: 22px; overflow: hidden;
+    background: linear-gradient(180deg, rgba(14,40,40,.92), rgba(7,22,24,.96));
+    box-shadow: 0 50px 120px rgba(0,0,0,.6), 0 0 0 1.5px rgba(217,174,87,.45), inset 0 1px 0 rgba(255,255,255,.06); }
+  .browser .bar { height: 54px; display: flex; align-items: center; gap: 12px; padding: 0 22px; border-bottom: 1px solid rgba(217,174,87,.18); background: rgba(0,0,0,.25); }
+  .browser .dot { width: 13px; height: 13px; border-radius: 50%; background: rgba(217,174,87,.35); }
+  .browser .addr { flex: 1; margin: 0 40px; height: 32px; border-radius: 16px; background: rgba(255,255,255,.05); border: 1px solid rgba(217,174,87,.15);
+    font-family: 'Plex'; font-size: 17px; color: rgba(241,230,207,.75); display: flex; align-items: center; justify-content: center; letter-spacing: .04em; }
+  .ui-head { display: flex; flex-direction: row-reverse; align-items: center; justify-content: space-between; padding: 26px 46px; direction: rtl; }
+  .ui-logo { font-family: 'Ruqaa'; font-size: 44px; color: var(--gold2); display: flex; align-items: center; gap: 14px; }
+  .ui-nav { display: flex; gap: 34px; font-family: 'Plex'; font-weight: 400; font-size: 21px; color: rgba(241,230,207,.7); direction: rtl; }
+  .search { margin: 10px auto 0; width: 70%; height: 74px; border-radius: 40px; direction: rtl;
+    background: rgba(241,230,207,.06); border: 1.5px solid rgba(217,174,87,.45); display: flex; align-items: center; padding: 0 32px; gap: 18px;
+    font-family: 'Plex'; font-size: 26px; color: var(--parch); box-shadow: 0 0 40px rgba(217,174,87,.08) inset; }
+  .search .ph { color: rgba(241,230,207,.42); }
+  .caret { display: inline-block; width: 2px; height: 32px; background: var(--gold2); margin-inline-start: 3px; vertical-align: middle; }
+  .tile { position: absolute; border-radius: 18px; background: linear-gradient(160deg, rgba(31,94,85,.55), rgba(10,34,36,.8));
+    border: 1px solid rgba(217,174,87,.28); box-shadow: 0 20px 50px rgba(0,0,0,.35); overflow: hidden; }
+  .tile .lbl { position: absolute; bottom: 18px; right: 22px; left: 22px; text-align: right; direction: rtl; font-family: 'Kufi'; font-weight: 500; font-size: 30px; color: var(--parch); }
+  .tile .sub { position: absolute; bottom: 58px; right: 22px; direction: rtl; font-family: 'Plex'; font-size: 17px; color: rgba(241,230,207,.5); }
+  .chip { position: absolute; padding: 10px 26px; border-radius: 30px; border: 1px solid rgba(217,174,87,.4); color: var(--gold2);
+    font-family: 'Kufi'; font-size: 26px; background: rgba(10,30,32,.7); white-space: nowrap; direction: rtl; }
+  .doorlabel { position: absolute; font-family: 'Kufi'; font-weight: 500; color: var(--parch); direction: rtl; white-space: nowrap; transform: translateX(-50%); text-align: center; }
+
+  /* preview chrome */
+  #ctrl { position: fixed; left: 0; right: 0; bottom: 0; padding: 10px 16px; display: flex; gap: 12px; align-items: center; background: rgba(0,0,0,.6); color: #ddd; font: 13px system-ui; }
+  #ctrl input[type=range] { flex: 1; }
+  #ctrl button { background: #d9ae57; color: #111; border: 0; border-radius: 6px; padding: 6px 14px; font-weight: 600; cursor: pointer; }
+  .render #ctrl { display: none; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="bg"></canvas>
+  <div id="scenes" class="layer"></div>
+  <canvas id="fx"></canvas>
+  <div id="flash"></div>
+  <div id="vignette"></div>
+  <canvas id="grain"></canvas>
+</div>
+<div id="ctrl"><button id="play">▶ Play</button><input id="seek" type="range" min="0" max="140.6" step="0.01" value="0"><span id="time">0.00</span></div>
+<audio id="vo" src="audio/voiceover.wav" preload="auto"></audio>
+
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/CustomEase.min.js"></script>
+<script src="vendor/DrawSVGPlugin.min.js"></script>
+<script src="vendor/MorphSVGPlugin.min.js"></script>
+<script src="vendor/d3.min.js"></script>
+<script src="vendor/topojson-client.min.js"></script>
+<script src="vendor/land-110m.js"></script>
+<script src="js/cues.js"></script>
+<script src="js/core.js"></script>
+<script src="js/brand.js"></script>
+<script src="js/act1.js"></script>
+<script src="js/act2.js"></script>
+<script src="js/act3.js"></script>
+<script>
+(async () => {
+  const q = new URLSearchParams(location.search);
+  const RENDER = q.has('render');
+  if (RENDER) document.body.classList.add('render');
+  const stage = document.getElementById('stage');
+  const fit = () => { if (!RENDER) { const s = Math.min(innerWidth / 1920, (innerHeight - 44) / 1080); stage.style.transform = `scale(${s})`; } };
+  fit(); addEventListener('resize', fit);
+
+  await Promise.all([
+    "700 40px Ruqaa", "400 40px Amiri", "700 40px Amiri", "500 40px Kufi", "700 40px Kufi", "400 40px Plex", "600 40px Plex",
+    "500 40px Cormorant", "600 40px Cormorant", "700 40px Messiri",
+  ].map(f => document.fonts.load(f, 'دار الأرقم abc')));
+  await document.fonts.ready;
+
+  E.setupCanvas('bg'); E.setupCanvas('fx'); E.setupCanvas('grain');
+  E.initSprites(); E.initGrain();
+  const root = document.getElementById('scenes');
+  for (const build of window.SCENES) build(root);
+  E.renderAt(0);
+  window.renderAt = E.renderAt;
+  window.__ready = true;
+
+  if (!RENDER) {
+    const vo = document.getElementById('vo'), seek = document.getElementById('seek'), time = document.getElementById('time'), play = document.getElementById('play');
+    let t = +(q.get('t') || 0);
+    vo.currentTime = t;
+    play.onclick = () => (vo.paused ? vo.play() : vo.pause());
+    vo.onplay = () => (play.textContent = '❚❚ Pause'); vo.onpause = () => (play.textContent = '▶ Play');
+    seek.oninput = () => { vo.currentTime = +seek.value; };
+    const loop = () => { t = vo.currentTime; E.renderAt(t); seek.value = t; time.textContent = t.toFixed(2); requestAnimationFrame(loop); };
+    loop();
+  }
+})();
+</script>
+</body>
+</html>
